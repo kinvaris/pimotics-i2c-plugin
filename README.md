@@ -71,6 +71,48 @@ i2c-1	i2c       	3f804000.i2c                    	I2C adapter
   60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
   70: -- -- -- -- -- -- -- --
   ```
+  This shows that two I2C addresses are in use – 0x20 and 1x21.
+
+# Testing the library
+
+* Detecting a button press
+
+```
+In [1]: import sys
+In [2]: sys.path.append('/opt/pimotics/pimotics/extensions/plugins/ABElectronics_Python_Libraries/library')
+In [3]: from GPIOExpander import GPIOExpander
+
+# Button IS NOT pressed
+In [4]: GPIOExpander().read(7, 0x20, "input")
+Out[4]: 0
+
+# Button IS pressed
+In [5]: GPIOExpander().read(7, 0x20, "input")
+Out[5]: 1
+```
+
+* Toggling a component
+
+```
+In [7]: GPIOExpander().toggle(2, 0x20)
+Out[7]: 1
+
+In [8]: GPIOExpander().toggle(2, 0x20)
+Out[8]: 0
+```
+
+* Reading a component it's current status
+```
+In [9]: GPIOExpander().read(2, 0x20)
+Out[9]: 0
+
+# Toggling a component for test purposes
+In [10]: GPIOExpander().toggle(2, 0x20)
+Out[10]: 1
+
+In [11]: GPIOExpander().read(2, 0x20)
+Out[11]: 1
+```
 
 
 
